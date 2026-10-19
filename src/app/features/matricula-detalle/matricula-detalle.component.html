@@ -49,16 +49,18 @@
         </div>
 
         @if (mostrarform) {
-          <form action="" class="bg-white border-none rounded-lg p-4 mb-4 space-y-3">
-            <select name="tipoEvaluacion" required class="w-full border rounded px-3 py-2 text-sm">
+          <form (ngSubmit)="guardarNota()" class="bg-white border-none rounded-lg p-4 mb-4 space-y-3">
+            <select [(ngModel)]="notaForm.tipoEvaluacion" name="tipoEvaluacion" required class="w-full border rounded px-3 py-2 text-sm">
               <option value="PRACTICA">Práctica</option>
               <option value="TRABAJO">Trabajo</option>
-              <option value="EXAMEN PARCIAL">Examen Parcial</option>
-              <option value="EXAMEN FINAL">Examen Final</option>
+              <option value="EXAMEN_PARCIAL">Examen Parcial</option>
+              <option value="EXAMEN_FINAL">Examen Final</option>
             </select>
 
             <div class="grid grid-cols-2 gap-3">
               <input
+                [(ngModel)]="notaForm.valor"
+                name="valor"
                 type="number"
                 min="0"
                 max="20"
@@ -68,6 +70,8 @@
                 class="border rounded px-3 py-2 text-sm"
               />
               <input
+                [(ngModel)]="notaForm.peso"
+                name="peso"
                 type="number"
                 min="0"
                 max="0.5"
@@ -75,6 +79,19 @@
                 class="border rounded px-3 py-2 text-sm"
               />
             </div>
+
+            <div class="grid grid-cols-1 gap-3">
+
+              <input
+                [(ngModel)]="notaForm.observacion"
+                name="observacion"
+                type="text"
+                placeholder="Observacion(opcional)"
+                class="w-full border rounded px-3 py-2 text-sm"
+              />
+
+            </div>
+
             <div class="flex justify-end gap-2">
               <button
                 type="button"
@@ -92,6 +109,36 @@
             </div>
           </form>
         }
+
+        <div class="bg-white border rounded-lg overflow-hidden shadow-sm">
+            <table class="w-full text-sm">
+              <thead class="bg-gray-100 text-gray-600 text-xs uppercase">
+                <tr>
+                  <th class="text-left px-3 py-2">Tipo</th>
+                  <th class="text-left px-3 py-2">Valor</th>
+                  <th class="text-left px-3 py-2">Peso</th>
+                  <th class="px-3 py-2"></th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                @for (nota of notas; track nota.id) {
+                  <tr class="border-t">
+                    <td class="px-3 py-2">{{nota.tipoEvaluacion}}</td>
+                    <td class="px-3 py-2">{{nota.valor}}</td>
+                    <td class="px-3 py-2">{{nota.peso}}</td>
+                  </tr>
+
+                }
+
+              </tbody>
+
+
+            </table>
+        </div>
+
+
       </div>
     </div>
   </ng-container>
