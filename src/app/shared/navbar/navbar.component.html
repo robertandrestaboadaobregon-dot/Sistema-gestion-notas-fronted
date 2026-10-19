@@ -1,0 +1,23 @@
+<toastApp></toastApp>
+
+<div class="min-h-screen bg-slate-100">
+ <!--Header / navigation bar-->
+ <header class="bg-blue-500 text-white py-4 px-8">
+  <div class="max-x-7x1 mx-auto flex flex-col md:flex-row items-center justify-between">
+   <div>
+    <h1 class="text-xl font-bold tracking-tight text-white">Sistema de Notas y Asistencias</h1>
+    <p class="text-sm text-slate-300 font-normal">Módulo de Análisis y Diseño de Sistemas</p>
+   </div>
+   <!--Menu de Navegation-->
+   <nav class="flex items-center gap-2">
+    <a routerLink="/alumnos" routerLinkActive="bg-white/10" class="px-3 py-2 rounded hover:bg-white/10">Alumnos</a>
+    <a routerLink="/profesores" routerLinkActive="bg-white/10" class="px-3 py-2 rounded hover:bg-white/10">Profesores</a>
+    <a routerLink="/cursos" routerLinkActive="bg-white/10" class="px-3 py-2 rounded hover:bg-white/10">Cursos</a>
+    <a routerLink="/matriculas" routerLinkActive="bg-white/10" class="px-3 py-2 rounded hover:bg-white/10">Matrículas</a>
+   </nav>
+  </div>
+ </header>
+ <main class="max-w-6xl mx-auto py-8">
+  <router-outlet></router-outlet>
+ </main>
+</div>

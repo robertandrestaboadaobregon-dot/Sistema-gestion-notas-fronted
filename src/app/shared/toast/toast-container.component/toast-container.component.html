@@ -1,0 +1,17 @@
+<div class="fixed top-4 right-4 z-50 flex flex-col gap-2 w-80 max-w-[calc[100vw-2rem]]">
+  @for (toast of toastService.toasts(); track toast.id) {
+    <div class="toast-enter text-white px-4 py-3 rounded-lg shadow-lg flex items-center justify-center text-xs font-bold shrink-0"
+    [class]="estilos[toast.tipo].bg"
+    (click)="toastService.dismiss(toast.id)">
+    <!--Icono circular segun el tipo-->
+    <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs"
+    >
+    {{estilos[toast.tipo].icono}}
+    </span>
+    <!--mensaje-->
+    <span class="flex-1"> {{toast.mensaje}}</span>
+
+
+    </div>
+  }
+</div>

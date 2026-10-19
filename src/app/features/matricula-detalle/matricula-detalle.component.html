@@ -1,0 +1,98 @@
+<a routerLink="/matriculas" class="text-lg text-black underline"> ⬅️ Volver a matriculas</a>
+
+@if (matricula) {
+  <ng-container>
+    <div class="mt-4 mb-6">
+      <h2 class="text-4xl font-bold text-black">
+        {{ matricula.alumno.nombres }} {{ matricula.alumno.apellidos }}
+      </h2>
+      <p class="text-sm text-gray-500">
+        {{ matricula.curso.nombre }} : Matriculado el {{ matricula.fechaMatricula }}
+      </p>
+    </div>
+
+    <!--resumen academico-->
+
+    <div class="grid grid-cols-4 gap-4 mb-8">
+      <div class="bg-white border-none rounded-lg p-4 shadow-sm">
+        <p class="text-xs text-gray-500 uppercase">Promedio Simple</p>
+        <p class="text-2xl font-bold text-black">9.6</p>
+      </div>
+
+      <div class="bg-white border-none rounded-lg p-4 shadow-sm">
+        <p class="text-xs text-gray-500 uppercase">Promedio Ponderado</p>
+        <p class="text-2xl font-bold text-black">9.12</p>
+      </div>
+
+      <div class="bg-white border-none rounded-lg p-4 shadow-sm">
+        <p class="text-xs text-gray-500 uppercase">Asistencia</p>
+        <p class="text-2xl font-bold text-black">50%</p>
+      </div>
+
+      <div class="bg-white border-none rounded-lg p-4 shadow-sm">
+        <p class="text-xs text-gray-500 uppercase">Clases Registradas</p>
+        <p class="text-2xl font-bold text-black">2/4</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8">
+      <!--notas-->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-bold text-black">Notas</h3>
+          <button
+            (click)="mostrarFormulario()"
+            class="text-xs bg-black text-white px-3 py-1.5 rounded"
+          >
+            + Agregar Nota
+          </button>
+        </div>
+
+        @if (mostrarform) {
+          <form action="" class="bg-white border-none rounded-lg p-4 mb-4 space-y-3">
+            <select name="tipoEvaluacion" required class="w-full border rounded px-3 py-2 text-sm">
+              <option value="PRACTICA">Práctica</option>
+              <option value="TRABAJO">Trabajo</option>
+              <option value="EXAMEN PARCIAL">Examen Parcial</option>
+              <option value="EXAMEN FINAL">Examen Final</option>
+            </select>
+
+            <div class="grid grid-cols-2 gap-3">
+              <input
+                type="number"
+                min="0"
+                max="20"
+                step="0.5"
+                placeholder="Valor (0-20) "
+                required
+                class="border rounded px-3 py-2 text-sm"
+              />
+              <input
+                type="number"
+                min="0"
+                max="0.5"
+                placeholder="Peso (opcional)"
+                class="border rounded px-3 py-2 text-sm"
+              />
+            </div>
+            <div class="flex justify-end gap-2">
+              <button
+                type="button"
+                (click)="cancelarFormulario()"
+                class="px-3 py-1.5 text-xs rounded border"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                class="px-3 py-1.5 text-xs rounded bg-amber-400 font-semibold text-white"
+              >
+                Guardar
+              </button>
+            </div>
+          </form>
+        }
+      </div>
+    </div>
+  </ng-container>
+}

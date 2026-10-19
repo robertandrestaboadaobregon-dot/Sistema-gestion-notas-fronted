@@ -1,0 +1,135 @@
+
+<!--Modal de confirmacion-->
+@if (confirmDelete) {
+  <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm">
+      <h3 class="font-semibold text-black mb-2">Eliminar Alumno</h3>
+      <p class="text-sm text-gray-600 mb-6" > ¿Estas seguro de eliminar a <strong>{{confirmDelete.nombres}} </strong> ? Esta opcion no se puede deshacer</p>
+<div class="flex justify-end gap-2 "></div>
+<button (click)="cancelarEliminar()" class="px-4 py-2 text-sm rounded border" >
+Cancelar
+</button>
+<button (click)="confirmarEliminar()" class="px-4 py-2 text-sm rounded bg-red-600 text-white font-semibold items-center gap-2">
+ Eliminar
+</button>
+    </div>
+  </div>
+}
+
+
+
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold text-black">
+    Alumnos
+  </h1>
+  <button (click)=" abrirNuevo()"  class="bg-black text-white text-sm px-4 py-2 rounded hover:backdrop:opacity-0">
+    Agregar Alumno
+  </button>
+</div>
+@if (mostrarForm) {
+  <div class="bg-white border rounded-lg p-5 mb-6 shadow-sm">
+    <h3 class="font-semibold text-black mb-4">{{editandoId ? "Editar Alumno" : "Agregar Alumno"}}</h3>
+<form [formGroup]="formularioBuilder" (ngSubmit)="guardar()" class=" grid grid-cols-2 gap-4">
+  <!--input de codigo-->
+  <div>
+    <label class="block text-xs font-medium text-gray-600 mb-1">
+      Codigo
+    </label>
+    <input formControlName="codigo" class="w-full border px-3 py-2 text-sm bg-gray-100" >
+  </div>
+   <!--input de dni-->
+  <div>
+    <label class="block text-xs font-medium text-gray-600 mb-1">
+      Dni
+    </label>
+    <input formControlName="dni" maxlength="8" inputmode="numeric" class="w-full border px-3 py-2 text-sm" >
+    @if(invalido('dni')){
+      <p class="text-xs text-red-600 mt-1 ">El dni solo debe tener numeros</p>
+    }
+
+  </div>
+  <!--input de nombres-->
+  <div>
+    <label class="block text-xs font-medium text-gray-600 mb-1">
+      Nombres
+    </label>
+    <input formControlName="nombres"  class="w-full border px-3 py-2 text-sm bg-gray-100" >
+    @if(invalido('nombres')){
+      <p class="text-xs text-red-600 mt-1 ">El nombre debe ser obligatorio</p>
+    }
+  </div>
+  <!--input de apellidos-->
+  <div>
+    <label class="block text-xs font-medium text-gray-600 mb-1">
+      Apellidos
+    </label>
+    <input formControlName="apellidos"  class="w-full border px-3 py-2 text-sm bg-gray-100" >
+    @if(invalido('apellidos')){
+      <p class="text-xs text-red-600 mt-1 ">Los apellidos deben ser obligatorios</p>
+    }
+  </div>
+  <!--input de email-->
+  <div>
+    <label class="block text-xs font-medium text-gray-600 mb-1">
+      Email
+    </label>
+    <input formControlName="email" type="email"  class="w-full border px-3 py-2 text-sm bg-gray-100-100" >
+    @if(invalido('email')){
+      <p class="text-xs text-red-600 mt-1 ">Ingresa un email valido</p>
+    }
+  </div>
+  <!--input de fecha nacimiento-->
+  <div>
+    <label class="block text-xs font-medium text-gray-600 mb-1">
+      Fecha de Nacimiento
+    </label>
+    <input formControlName="fechaNacimiento" type="date" required class="w-full border px-3 py-2 text-sm bg-gray-100" >
+  </div>
+
+  <div class="col-span-2 flex gap-2 justify-end mt-2">
+    <button  (click)="cerrarForm()" type="button" class="px-4 py-2 text-sm rounded border">CANCELAR</button>
+    <button type="submit" [disabled]="formularioBuilder.invalid" class="px-4 py-2 text-sm rounded bg-amber-500 text-white font-semibold disabled:opacity-50">{{editandoId ? "Editar " : "Guardar"}}</button>
+  </div>
+</form>
+</div>
+
+}
+
+<div class="bg-white border rounded-lg overflow-hidden shadow-sm">
+  <table class="w-full text-sm">
+    <thead class="bg-gray-100 text-gray-600 text-xs uppercase">
+      <tr>
+        <th class="text-left px-4 py-3">Codigo</th>
+        <th class="text-left px-4 py-3">Nombre Completo</th>
+        <th class="text-left px-4 py-3">Dni</th>
+        <th class="text-left px-4 py-3">Email</th>
+        <th class="text-left px-4 py-3">Estado</th>
+        <th class="px-4 py-3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (alumno of alumnos; track alumno.id) {
+        <tr class="border-t ">
+          <td class="px-4 py-3">{{alumno.codigo}}</td>
+          <td class="px-4 py-3">{{alumno.nombres}} {{alumno.apellidos}}</td>
+          <td class="px-4 py-3">{{alumno.dni}}</td>
+          <td class="px-4 py-3">{{alumno.email}}</td>
+          <td class="px-4 py-3">
+            <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700">
+              {{alumno.estado}}
+            </span>
+          </td>
+          <td class="px-4 py-3 text-right space-x-2">
+            <button (click)="editar(alumno)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button (click)="eliminar(alumno)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+
+  </table>
+</div>

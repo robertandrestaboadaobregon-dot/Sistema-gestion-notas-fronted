@@ -1,0 +1,113 @@
+<div class="flex items-center justify-between mb-6">
+  <h2 class="text-2xl font-bold text-black">
+    Matriculas
+  </h2>
+  <button
+    (click)="mostrar()"
+    class="bg-black text-white text-sm px-4 py-2 rounded hover:opacity-80"
+  >
+    + Nueva Matricula
+  </button>
+</div>
+@if (mostrarFormulario) {
+    <div class="bg-white border rounded-lg p-5 mb-6 shadow-sm">
+        <h3 class="font-semibold text-black mb-4">
+            Matricular un alumno Nuevo
+        </h3>
+    <form (ngSubmit)="guardar()"
+      class="grid grid-cols-2 gap-4"
+    >
+    <div>
+        <label class="block text-xs font-medium text-gray-600 mb-1">
+         Alumno
+        </label>
+        <select [(ngModel)]="form.alumnoId" class="w-full border rounded px-3 py-2 text-sm" name="alumnoId" id=""
+        >
+          <option [value]="undefined" disabled>
+            --Seleccione un alumno--</option>
+            @for (alumno of alumnos; track alumno.id) {
+                <option [value]="alumno.id">
+                    {{alumno.nombres}}
+                    {{alumno.apellidos}}
+                   ( {{alumno.codigo}})
+                </option>
+            }
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-gray-600 mb-1">
+          Curso
+        </label>
+        <select [(ngModel)]="form.cursoId" class="w-full border rounded px-3 py-2 text-sm" name="cursoId" id=""
+        >
+          <option [value]="undefined" disabled>
+            --Seleccione un curso--</option>
+            @for (curso of cursos; track curso.id) {
+                <option [value]="curso.id">
+                    {{curso.nombre}}
+                   ( {{curso.codigo}})
+                </option>
+            }
+        </select>
+      </div>
+      <div class="col-span-2 flex gap-2 justify-end mt-2">
+        <button (click)="cerrarform()" type="button" class="px-4 py-2 text-sm rounded border">Cancelar</button>
+        <button type="submit" class="px-4 py-2 text-sm rounded bg-amber-500 text-white font-semibold">Matricular</button>
+      </div></form>
+    </div>
+}
+
+<div class="bg-white border rounded-lg overflow-hidden shadow-sm">
+    <table class="w-full text-sm">
+      <thead class="bg-gray-100 text-gray-600 text-xs uppercase">
+      <tr>
+        <th class="text-left px-4 py-3">
+          Alumno
+        </th>
+        <th class="text-left px-4 py-3">
+          Curso
+        </th>
+        <th class="text-left px-4 py-3">
+          Fecha
+        </th>
+        <th class="text-left px-4 py-3">
+          Estado
+        </th>
+        <th class="px-4 py-3">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (matricula of matriculas; track matricula.id) {
+        <tr class="border-t">
+          <td class="px-4 py-3">
+            {{ matricula.alumno.nombres }} {{matricula.alumno.apellidos}}
+          </td>
+          <td class="px-4 py-3">
+            {{ matricula.curso.nombre }}
+          </td>
+          <td class="px-4 py-3">
+            {{ matricula.fechaMatricula }}
+          </td>
+          <td><span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700">{{matricula.estado}}</span></td>
+          <td class="px-4 py-3 text-right space-x-2">
+            <button [routerLink]="['/matriculas-detalle', matricula.id]"
+              class="bg-gray-500 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded"
+            >
+              <i class="fa-solid fa-circle-info"></i>
+            </button>
+            <button
+              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+
+    </table>
+
+</div>
+
+
