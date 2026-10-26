@@ -125,9 +125,14 @@
 
                 @for (nota of notas; track nota.id) {
                   <tr class="border-t">
-                    <td class="px-3 py-2">{{nota.tipoEvaluacion}}</td>
+                    <td class="px-3 py-2">{{etiquetaEvaluacion(nota.tipoEvaluacion)}}</td>
                     <td class="px-3 py-2">{{nota.valor}}</td>
                     <td class="px-3 py-2">{{nota.peso}}</td>
+                    <td class="px-3 py-2 text-right">
+                        <button (click)="eliminarNota(nota)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
                   </tr>
 
                 }

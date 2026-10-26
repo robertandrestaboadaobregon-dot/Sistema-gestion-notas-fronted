@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatriculaService } from '../../core/services/matricula.service';
 import { Matricula } from '../../core/models/matricula.model';
 import { NotaService } from '../../core/services/nota.service';
-import { NotaRequest, NotaResponse, TipoEvaluacion } from '../../core/models/nota.model';
+import { Nota, NotaRequest, NotaResponse, TipoEvaluacion } from '../../core/models/nota.model';
 import { AsistenciaService } from '../../core/services/asistencia.service';
 import { AsistenciaResponse } from '../../core/models/asistencia.model';
 import { ResumenAcademico } from '../../core/models/resumen-academico';
@@ -71,6 +71,27 @@ guardarNota() {
     next:() => {
       this.cancelarFormulario();
       this.notaForm  = {tipoEvaluacion:'PRACTICA',valor:undefined,peso:undefined}
+      this.cargarNotas();
+    }
+  })
+
+}
+
+etiquetaEvaluacion(tipo:TipoEvaluacion):string{
+  const etiqueta :Record<TipoEvaluacion,string>={
+    PRACTICA:'Practica',
+    TRABAJO: 'Trabajo',
+    EXAMEN_PARCIAL: 'Examen Parcial',
+    EXAMEN_FINAL: 'Examen Final'
+  };
+  return etiqueta[tipo];
+}
+
+eliminarNota(nota:any){
+  if(!nota.id) return;//si no existe nota.id se sale de la funcion
+  if(!confirm('¿Eliminar esta nota?')) return;
+  this.notaService.eliminarNota(nota.id).subscribe({
+    next:()=> {
       this.cargarNotas();
     }
   })
