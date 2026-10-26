@@ -119,8 +119,9 @@ cargarResumen():void{
 cargarNotas():void{
   this.notaService.listarPorMatricula(this.matriculaId).subscribe({
     next:(data)=> {
-      console.log(data)
-      this.notas = data}
+      this.notas = data
+      this.cdr.detectChanges()
+    }
   })
 
 }
